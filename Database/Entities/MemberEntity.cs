@@ -1,25 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FamilyAccountingSystem.Domain.Models
+namespace FamilyAccountingSystem.Database.Entities
 {
-    public class Member
+    [Table("member")]
+    public class MemberEntity
     {
+        [Key, Column("member_id")]
         public long Id { get; set; }
-        [MaxLength(100)]
+        [Column("name"),MaxLength(100)]
         public string Name { get; set; } = default!;
-        [MaxLength(100)]
+        [Column("surname"), MaxLength(100)]
         public string? Surname { get; set; } = default!;
-        [MaxLength(100)]
+        [Column("patronymic"), MaxLength(100)]
         public string? Patronymic { get; set; } = default!;
-        [MaxLength(200)]
+        [Column("description"), MaxLength(200)]
         public string? Description { get; set; } = default!;
-
+        [Column("birthday")]
         public DateOnly? BirthDay { get; set; } = default!;
-
+        [Column("gender")]
         public bool? Gender { get; set; } = default!;
-        [MaxLength(20)]
+        [Column("phone"),MaxLength(20)]
         public string? Phone { get; set; } = default!;
-        [MaxLength(100)]
+        [Column("email"),MaxLength(100)]
         public string? Email { get; set; } = default!;
     }
 }

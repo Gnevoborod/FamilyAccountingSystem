@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FamilyAccountingSystem.Database.Entities;
+using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using System.Diagnostics;
 
@@ -7,6 +8,17 @@ namespace FamilyAccountingSystem.Database
     public class FamilyContext: DbContext
     {
         private string connectionString = default!;
+        public DbSet<AttributeEntity> AttributeEntity { get; set; }
+        public DbSet<FamilyEntity> FamilyEntity { get; set; }
+
+        public DbSet<FamilyMemberEntity> FamilyMemberEntity { get; set; }
+        public DbSet<FamilyMemberPropertyEntity> FamilyMemberPropertyEntity { get; set; }
+
+        public DbSet<FamilyRoleEntity> FamilyRoleEntity { get; set; }
+
+        public DbSet<MemberEntity> MemberEntity { get; set; }
+
+        public DbSet<PropertyEntity> PropertyEntity { get; set; }
         private void SetConnectionString(bool IntegrationTests = false)
         {
             var config = new ConfigurationBuilder()
@@ -19,7 +31,7 @@ namespace FamilyAccountingSystem.Database
         {
             if (connectionString == null)
                 SetConnectionString();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
 

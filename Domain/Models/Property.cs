@@ -7,8 +7,5 @@ namespace FamilyAccountingSystem.Domain.Models
         public long Id { get; set; }
         [MaxLength(150)]
         public string Name { get; set; }
-
-        
-
     }
 }

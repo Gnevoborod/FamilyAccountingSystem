@@ -1,4 +1,5 @@
 
+using FamilyAccountingSystem.Database;
 using FamilyAccountingSystem.Infrastructure.Exceptions;
 using NLog;
 using NLog.Web;
@@ -16,6 +17,8 @@ namespace FamilyAccountingSystem
             builder.Host.UseNLog();
             builder.Services.AddControllers();
             builder.Services.AddMvc(options => options.Filters.Add(typeof(ApiExceptionFilter)));
+
+            builder.Services.AddDbContext<FamilyContext>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace FamilyAccountingSystem.Database
 {
-    public class FamilyContextFactory
+    public class FamilyContextFactory: IDesignTimeDbContextFactory<FamilyContext>
     {
         public FamilyContext CreateDbContext(string[] args)
         {
