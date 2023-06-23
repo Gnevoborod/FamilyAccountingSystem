@@ -1,15 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FamilyAccountingSystem.Domain.Models
+namespace FamilyAccountingSystem.Controllers.Dtos.Property
 {
-    public class Attribute
+    public class PropertyDto
     {
-        [MaxLength(100)]
+        public long Id { get; set; }
         public string Name { get; set; }
-        [MaxLength(100)]
         public string Value { get; set; }
-        [MaxLength(250)]
         public string? Description { get; set; }
-
     }
 }

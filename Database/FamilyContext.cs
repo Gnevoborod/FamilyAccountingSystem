@@ -8,17 +8,19 @@ namespace FamilyAccountingSystem.Database
     public class FamilyContext: DbContext
     {
         private string connectionString = default!;
-        public DbSet<AttributeEntity> AttributeEntity { get; set; }
+        public DbSet<PropertyEntity> PropertyEntity { get; set; }
         public DbSet<FamilyEntity> FamilyEntity { get; set; }
 
         public DbSet<FamilyMemberEntity> FamilyMemberEntity { get; set; }
-        public DbSet<FamilyMemberPropertyEntity> FamilyMemberPropertyEntity { get; set; }
+        public DbSet<FamilyMemberOwnEntity> FamilyMemberPropertyEntity { get; set; }
 
         public DbSet<FamilyRoleEntity> FamilyRoleEntity { get; set; }
 
         public DbSet<MemberEntity> MemberEntity { get; set; }
 
-        public DbSet<PropertyEntity> PropertyEntity { get; set; }
+        public DbSet<OwnEntity> OwnEntity { get; set; }
+
+        public DbSet<OwnPropertyFamilyEntity> OwnPropertyFamilyEntities { get; set; }
         private void SetConnectionString(bool IntegrationTests = false)
         {
             var config = new ConfigurationBuilder()

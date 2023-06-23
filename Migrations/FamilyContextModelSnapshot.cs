@@ -22,28 +22,6 @@ namespace FamilyAccountingSystem.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("FamilyAccountingSystem.Database.Entities.AttributeEntity", b =>
-                {
-                    b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)")
-                        .HasColumnName("description");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("value");
-
-                    b.ToTable("attribute");
-                });
-
             modelBuilder.Entity("FamilyAccountingSystem.Database.Entities.FamilyEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -105,7 +83,7 @@ namespace FamilyAccountingSystem.Migrations
                     b.ToTable("family_member");
                 });
 
-            modelBuilder.Entity("FamilyAccountingSystem.Database.Entities.FamilyMemberPropertyEntity", b =>
+            modelBuilder.Entity("FamilyAccountingSystem.Database.Entities.FamilyMemberOwnEntity", b =>
                 {
                     b.Property<string>("Description")
                         .HasMaxLength(250)
@@ -124,9 +102,9 @@ namespace FamilyAccountingSystem.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("member_id");
 
-                    b.Property<long>("PropertyId")
+                    b.Property<long>("OwnId")
                         .HasColumnType("bigint")
-                        .HasColumnName("property_id");
+                        .HasColumnName("own_id");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone")
@@ -136,7 +114,7 @@ namespace FamilyAccountingSystem.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.HasIndex("PropertyId");
+                    b.HasIndex("OwnId");
 
                     b.ToTable("famiy_member_property");
                 });
@@ -214,6 +192,49 @@ namespace FamilyAccountingSystem.Migrations
                     b.ToTable("member");
                 });
 
+            modelBuilder.Entity("FamilyAccountingSystem.Database.Entities.OwnEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("own_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("own");
+                });
+
+            modelBuilder.Entity("FamilyAccountingSystem.Database.Entities.OwnPropertyFamilyEntity", b =>
+                {
+                    b.Property<long>("FamilyId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("family_id");
+
+                    b.Property<long>("OwnId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("own_id");
+
+                    b.Property<long>("PropertyId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("property_id");
+
+                    b.HasIndex("FamilyId");
+
+                    b.HasIndex("OwnId");
+
+                    b.HasIndex("PropertyId");
+
+                    b.ToTable("own_property_family");
+                });
+
             modelBuilder.Entity("FamilyAccountingSystem.Database.Entities.PropertyEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -223,11 +244,22 @@ namespace FamilyAccountingSystem.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("description");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
                         .HasColumnName("name");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("value");
 
                     b.HasKey("Id");
 
@@ -261,7 +293,7 @@ namespace FamilyAccountingSystem.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("FamilyAccountingSystem.Database.Entities.FamilyMemberPropertyEntity", b =>
+            modelBuilder.Entity("FamilyAccountingSystem.Database.Entities.FamilyMemberOwnEntity", b =>
                 {
                     b.HasOne("FamilyAccountingSystem.Database.Entities.FamilyEntity", "Family")
                         .WithMany()
@@ -275,6 +307,33 @@ namespace FamilyAccountingSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FamilyAccountingSystem.Database.Entities.OwnEntity", "Own")
+                        .WithMany()
+                        .HasForeignKey("OwnId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Family");
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Own");
+                });
+
+            modelBuilder.Entity("FamilyAccountingSystem.Database.Entities.OwnPropertyFamilyEntity", b =>
+                {
+                    b.HasOne("FamilyAccountingSystem.Database.Entities.FamilyEntity", "Family")
+                        .WithMany()
+                        .HasForeignKey("FamilyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FamilyAccountingSystem.Database.Entities.OwnEntity", "Own")
+                        .WithMany()
+                        .HasForeignKey("OwnId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FamilyAccountingSystem.Database.Entities.PropertyEntity", "Property")
                         .WithMany()
                         .HasForeignKey("PropertyId")
@@ -283,7 +342,7 @@ namespace FamilyAccountingSystem.Migrations
 
                     b.Navigation("Family");
 
-                    b.Navigation("Member");
+                    b.Navigation("Own");
 
                     b.Navigation("Property");
                 });

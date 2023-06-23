@@ -1,4 +1,4 @@
-﻿namespace FamilyAccountingSystem.Interfaces
+﻿namespace FamilyAccountingSystem.Interfaces.Services
 {
     public interface IAuthFamilyService
     {

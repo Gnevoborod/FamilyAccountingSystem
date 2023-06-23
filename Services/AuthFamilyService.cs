@@ -1,4 +1,4 @@
-﻿using FamilyAccountingSystem.Interfaces;
+﻿using FamilyAccountingSystem.Interfaces.Services;
 
 namespace FamilyAccountingSystem.Services
 {

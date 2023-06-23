@@ -2,7 +2,9 @@
 using FamilyAccountingSystem.Database;
 using FamilyAccountingSystem.Infrastructure.Exceptions;
 using FamilyAccountingSystem.Infrastructure.Security;
-using FamilyAccountingSystem.Interfaces;
+using FamilyAccountingSystem.Interfaces.Repositories;
+using FamilyAccountingSystem.Interfaces.Services;
+using FamilyAccountingSystem.Repositories;
 using FamilyAccountingSystem.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -26,7 +28,8 @@ namespace FamilyAccountingSystem
             builder.Services.AddMvc(options => options.Filters.Add(typeof(ApiExceptionFilter)));
 
             builder.Services.AddScoped<IAuthFamilyService, AuthFamilyService>();
-
+            builder.Services.AddScoped<IPropertyService, PropertyService>();
+            builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
             builder.Services.AddDbContext<FamilyContext>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

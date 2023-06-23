@@ -7,7 +7,7 @@ namespace FamilyAccountingSystem.Database.Entities
 {
     //связь семьи, члена семьи и собственности (отец из семьи а владеет авто, и он же сын и семьи б и владеет квартирой)
     [Table("famiy_member_property"), Keyless]
-    public class FamilyMemberPropertyEntity
+    public class FamilyMemberOwnEntity
     {
         [ForeignKey(nameof(FamilyId))]
         public FamilyEntity Family { get; set; }
@@ -17,10 +17,10 @@ namespace FamilyAccountingSystem.Database.Entities
         public MemberEntity Member { get; set; }
         [Column("member_id")]
         public long MemberId { get; set; }
-        [ForeignKey(nameof(PropertyId))]
-        public PropertyEntity Property { get; set; }
-        [Column("property_id")]
-        public long PropertyId { get; set; }
+        [ForeignKey(nameof(OwnId))]
+        public OwnEntity Own { get; set; }
+        [Column("own_id")]
+        public long OwnId { get; set; }
         [Column("start_date")]
         public DateTime StartDate { get; set; }
         [Column("end_date")]
