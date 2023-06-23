@@ -13,10 +13,6 @@ namespace FamilyAccountingSystem.Database.Entities
         public string Value { get; set; }
         [Column("description"),MaxLength(250)]
         public string? Description { get; set; }
-        [ForeignKey(nameof(PropertyId))]
-        public PropertyEntity Property { get; set; }
-        [Column("property_id")]
-        public long PropertyId { get; set; }
 
     }
 }
